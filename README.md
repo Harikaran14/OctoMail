@@ -1,310 +1,309 @@
+# 📬 OctoMail – AI-Powered Smart Inbox Productivity Assistant
 
-<h1 align="center">🐙 OctoMail</h1>
+OctoMail is a full-stack AI-powered email productivity assistant built using the **MERN stack**, **Gmail API**, and **LLM-based semantic processing**.
+It intelligently summarizes emails, extracts tasks & deadlines, classifies priorities, enables semantic inbox search using embeddings, and generates daily productivity insights.
 
-<h3 align="center">AI-Powered Semantic Email Intelligence Platform</h3>
-
-<p align="center">
-Transform your inbox into a searchable knowledge system using embeddings, vector search, and LLM summarization.
-</p>
-
-<p align="center">
-<img src="https://img.shields.io/badge/Python-Backend-blue?style=flat-square"/>
-<img src="https://img.shields.io/badge/Flask-REST--API-black?style=flat-square"/>
-<img src="https://img.shields.io/badge/VectorDB-FAISS-orange?style=flat-square"/>
-<img src="https://img.shields.io/badge/Embeddings-NLP-green?style=flat-square"/>
-<img src="https://img.shields.io/badge/LLM-Summarization-purple?style=flat-square"/>
-<img src="https://img.shields.io/badge/Status-Active-success?style=flat-square"/>
-</p>
+Designed as a **production-style applied AI system**, InboxIQ demonstrates modern **LLM integration, vector search, async pipelines, and scalable backend architecture**.
 
 ---
 
-# 🚀 Overview
+# 🚀 Features
 
-**OctoMail** is an intelligent email processing platform that enables semantic search and contextual summarization across inbox data using embeddings and vector databases.
+## 🔐 Authentication
 
-Instead of traditional keyword-based filtering, OctoMail understands **meaning and intent** within emails.
+* Google OAuth 2.0 login
+* Secure access token handling
+* Gmail permission-based inbox access
+
+## 📥 Email Intelligence Pipeline
+
+* Fetch unread & recent emails from Gmail API
+* Decode base64 email payloads
+* Clean HTML email content
+* Thread-aware processing support
+
+## 🤖 AI-Powered Processing
+
+* Email summarization (LLM)
+* Priority classification (High / Medium / Low)
+* Task extraction
+* Deadline detection
+* Smart reply generation
+
+## 🔎 Semantic Inbox Search (Vector Search)
+
+* Generate embeddings for email content
+* MongoDB Atlas vector indexing
+* Search emails by meaning instead of keywords
+
+Example:
+
+```
+show emails about deadlines
+```
+
+Returns relevant emails even without keyword matches.
+
+## 📊 Analytics Dashboard
+
+Visual insights including:
+
+* Priority distribution
+* Email frequency trends
+* Top senders
+* Task detection statistics
+* Daily inbox activity summary
+
+## 🗓 Daily Digest Generator
+
+Automatically generates:
+
+```
+Today's Summary:
+
+2 urgent emails
+3 action-required tasks
+5 informational emails
+```
+
+## 🧠 Email Clustering
+
+Automatically groups emails into categories like:
+
+* Work
+* Finance
+* Shopping
+* Meetings
+* Deadlines
+
+Using semantic similarity.
 
 ---
 
-# ✨ Features
+# 🏗 Tech Stack
 
-* 📧 Email parsing from mailbox sources
-* 🔢 Embedding-based semantic representation
-* 🔍 Context-aware email retrieval
-* ✨ LLM-powered email summarization
-* 📊 Priority email detection
-* 📦 Vector similarity search using FAISS / ChromaDB
-* ⚡ REST API backend architecture
-* 🧩 Modular and scalable pipeline design
-
----
-
-# 🧠 Problem Statement
-
-Modern inbox systems rely heavily on keyword matching and manual filtering.
-
-This causes:
-
-* inefficient search
-* missed important context
-* reduced productivity
-
-OctoMail solves this using:
-
-Embeddings + Vector Search + LLM Summarization
-
-to enable intelligent inbox navigation.
-
----
-
-# 🏗️ System Architecture
-
-Email Source
-↓
-Parser Module
-↓
-Embedding Generator
-↓
-Vector Database
-↓
-Semantic Search Engine
-↓
-LLM Summarization Layer
-↓
-REST API Interface
-
----
-
-# ⚙️ Tech Stack
-
-### Backend
-
-* Python
-* Flask / FastAPI
-
-### AI / NLP
-
-* SentenceTransformers
-* OpenAI Embeddings (optional)
-* LLM summarization pipeline
-
-### Vector Database
-
-* FAISS
-* ChromaDB
-* Pinecone (optional)
-
-### Database
-
-* MongoDB / PostgreSQL
-
-### Frontend (Optional)
+## Frontend
 
 * React.js
+* Axios
+* React Router
+* Recharts
+
+## Backend
+
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose
+
+## Authentication
+
+* Google OAuth 2.0
+* Passport.js
+
+## AI Layer
+
+* OpenAI / Gemini APIs
+* Prompt-engineered structured outputs
+* Email summarization
+* Task extraction
+* Priority classification
+
+## Vector Search
+
+* Embeddings generation
+* MongoDB Atlas Vector Index
+* Semantic similarity retrieval
+
+## Scheduling
+
+* node-cron background jobs
+* automated email processing pipeline
+* daily digest generation
+
+---
+
+# 🧠 System Architecture
+
+```
+React Dashboard
+        ↓
+Express Backend API
+        ↓
+Google OAuth Authentication
+        ↓
+Gmail API Email Fetching
+        ↓
+Email Cleaning Pipeline
+        ↓
+LLM Processing Layer
+        ↓
+Embeddings Generator
+        ↓
+MongoDB Storage + Vector Index
+        ↓
+Semantic Search + Analytics Dashboard
+```
 
 ---
 
 # 📂 Project Structure
 
-OctoMail/
-
-backend/
-app.py
-routes/
-services/
-
-email_parser/
-
-embeddings/
-
-summarizer/
-
-vector_store/
-
-frontend/
-
-requirements.txt
-
-README.md
-
----
-
-# 🔍 How It Works
-
-### Step 1 — Email Parsing
-
-Emails are extracted from:
-
-* Gmail API
-* IMAP mailbox
-* local dataset sources
-
-Converted into structured format:
-
-sender
-subject
-timestamp
-body
-attachment metadata
+```
+InboxIQ
+│
+├── frontend
+│   ├── components
+│   ├── pages
+│   ├── hooks
+│   └── services
+│
+├── backend
+│   ├── routes
+│   ├── controllers
+│   ├── services
+│   ├── middleware
+│   ├── models
+│   └── utils
+│
+└── README.md
+```
 
 ---
 
-### Step 2 — Embedding Generation
+# ⚙️ Installation
 
-Email content converted into vector representation:
+## Clone repository
 
-email_text → embedding_vector
-
-Using SentenceTransformers or OpenAI embeddings.
-
----
-
-### Step 3 — Vector Storage
-
-Embeddings stored inside FAISS / ChromaDB / Pinecone
-
-Enables semantic similarity search instead of keyword matching.
+```
+git clone https://github.com/yourusername/inboxiq.git
+cd inboxiq
+```
 
 ---
 
-### Step 4 — Semantic Retrieval
+## Backend setup
 
-Example query:
-
-meeting with placement coordinator last week
-
-OctoMail retrieves contextually relevant emails even without exact keyword matches.
+```
+cd backend
+npm install
+npm start
+```
 
 ---
 
-### Step 5 — LLM Summarization
+## Frontend setup
 
-Example output:
+```
+cd frontend
+npm install
+npm start
+```
 
-Meeting scheduled Friday 3PM regarding internship documentation submission.
+---
 
-Generated using LLM summarization pipeline.
+# 🔑 Environment Variables
+
+Create `.env` file inside backend folder:
+
+```
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+OPENAI_API_KEY=your_api_key
+```
 
 ---
 
 # 📡 API Endpoints
 
-### Upload Email
+## Authentication
 
-POST /upload-email
+```
+GET /auth/google
+GET /auth/google/callback
+```
 
-Stores email content and embeddings.
+## Emails
 
----
+```
+GET /emails/fetch
+GET /emails/summaries
+GET /emails/tasks
+```
 
-### Semantic Search
+## AI Features
 
-GET /search?q=internship deadline
+```
+POST /emails/summarize
+POST /emails/reply
+POST /emails/search
+```
 
-Returns most relevant emails.
+## Analytics
 
----
-
-### Summarize Email
-
-POST /summarize/{email_id}
-
-Returns concise summary.
-
----
-
-### Priority Detection
-
-GET /priority
-
-Returns important emails.
-
----
-
-# 🧪 Example Workflow
-
-User Query:
-
-Find emails about internship deadlines
-
-Pipeline:
-
-Query embedding generated
-↓
-Similarity search executed
-↓
-Top matching emails retrieved
-↓
-LLM summarization applied
-
-Output:
-
-Top relevant internship-related emails with summaries.
+```
+GET /analytics/dashboard
+```
 
 ---
 
-# 🛠️ Installation
+# 🔎 Semantic Search Example
 
-Clone repository:
+Example query:
 
-git clone https://github.com/Harikaran14/OctoMail.git
+```
+Find emails about assignment deadlines
+```
 
-Move into project directory:
+Workflow:
 
-cd OctoMail
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Run backend server:
-
-python app.py
+```
+Query → Embedding → Vector Similarity Search → Matching Emails
+```
 
 ---
 
-# 📊 Applications
+# 🧪 Example AI Output Format
 
-OctoMail can be used in:
-
-* enterprise email intelligence systems
-* productivity assistants
-* inbox automation platforms
-* knowledge retrieval systems
-* AI workplace assistants
-
----
-
-# 🔐 Security Enhancements (Planned)
-
-* OAuth authentication
-* encrypted vector storage
-* secure REST endpoints
-* role-based access control
+```
+{
+  summary: "Meeting moved to tomorrow at 4 PM",
+  priority: "High",
+  tasks: ["Attend meeting"],
+  deadlines: ["Tomorrow 4 PM"]
+}
+```
 
 ---
 
-# 📈 Future Improvements
+# 📈 Future Enhancements
 
-* Gmail OAuth integration
-* attachment summarization
-* email thread summarization
-* browser extension support
-* conversational email assistant
-* real-time inbox monitoring
-* knowledge graph integration
+* Thread-level summarization
+* Calendar integration
+* Slack / WhatsApp notifications
+* Mobile responsive dashboard
+* Multi-account inbox support
+* RAG-based conversational inbox assistant
 
 ---
 
-# 📚 Learning Outcomes
+# 🎯 Learning Outcomes
 
 This project demonstrates:
 
-* semantic search pipeline implementation
-* embedding-based retrieval architecture
-* vector database integration
-* LLM summarization workflow
-* scalable backend API design
+* Full-stack MERN architecture
+* Gmail API integration
+* OAuth authentication workflows
+* Prompt engineering with structured outputs
+* Vector embeddings & semantic retrieval
+* MongoDB aggregation pipelines
+* Background scheduling systems
+* Applied LLM system design
 
 ---
 
@@ -312,22 +311,4 @@ This project demonstrates:
 
 **Harikaran C**
 
-B.Tech — Computer Science
-SSN College of Engineering
-
-Interested in:
-
-AI Systems
-Backend Engineering
-Distributed Applications
-Software Testing Automation
-
----
-
-# ⭐ Support
-
-If you found this project useful:
-
-Star ⭐ the repository
-
-Contributions welcome!
+Built as a flagship applied AI full-stack project showcasing modern LLM-powered productivity automation systems.
