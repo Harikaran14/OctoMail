@@ -1,4 +1,4 @@
-##OctoMail — AI-Powered Semantic Email Intelligence Platform
+## OctoMail — AI-Powered Semantic Email Intelligence Platform
 
 OctoMail is an intelligent email processing system that uses embeddings, vector search, and LLM-powered summarization to help users quickly understand, organize, and retrieve important information from their inbox.
 
