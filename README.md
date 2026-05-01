@@ -1,200 +1,255 @@
-## OctoMail — AI-Powered Semantic Email Intelligence Platform
 
-OctoMail is an intelligent email processing system that uses embeddings, vector search, and LLM-powered summarization to help users quickly understand, organize, and retrieve important information from their inbox.
+<h1 align="center">🐙 OctoMail</h1>
 
-It transforms traditional keyword-based email browsing into semantic search + contextual summarization.
+<h3 align="center">AI-Powered Semantic Email Intelligence Platform</h3>
 
-🚀 Features
+<p align="center">
+Transform your inbox into a searchable knowledge system using embeddings, vector search, and LLM summarization.
+</p>
 
-✅ Automatic email summarization
-✅ Semantic email search using embeddings
-✅ Priority email detection
-✅ Intelligent tagging & categorization
-✅ Context-aware email retrieval
-✅ Vector database-powered similarity search
-✅ Scalable modular architecture
-✅ REST API backend support
+<p align="center">
+<img src="https://img.shields.io/badge/Python-Backend-blue?style=flat-square"/>
+<img src="https://img.shields.io/badge/Flask-REST--API-black?style=flat-square"/>
+<img src="https://img.shields.io/badge/VectorDB-FAISS-orange?style=flat-square"/>
+<img src="https://img.shields.io/badge/Embeddings-NLP-green?style=flat-square"/>
+<img src="https://img.shields.io/badge/LLM-Summarization-purple?style=flat-square"/>
+<img src="https://img.shields.io/badge/Status-Active-success?style=flat-square"/>
+</p>
 
-🧠 Problem Statement
+---
 
-Modern inboxes contain hundreds of emails daily. Traditional filtering:
+# 🚀 Overview
 
-relies on keywords
-lacks contextual understanding
-wastes time during search
+**OctoMail** is an intelligent email processing platform that enables semantic search and contextual summarization across inbox data using embeddings and vector databases.
+
+Instead of traditional keyword-based filtering, OctoMail understands **meaning and intent** within emails.
+
+---
+
+# ✨ Features
+
+* 📧 Email parsing from mailbox sources
+* 🔢 Embedding-based semantic representation
+* 🔍 Context-aware email retrieval
+* ✨ LLM-powered email summarization
+* 📊 Priority email detection
+* 📦 Vector similarity search using FAISS / ChromaDB
+* ⚡ REST API backend architecture
+* 🧩 Modular and scalable pipeline design
+
+---
+
+# 🧠 Problem Statement
+
+Modern inbox systems rely heavily on keyword matching and manual filtering.
+
+This causes:
+
+* inefficient search
+* missed important context
+* reduced productivity
 
 OctoMail solves this using:
 
 Embeddings + Vector Search + LLM Summarization
 
-to enable intelligent email navigation.
+to enable intelligent inbox navigation.
 
-🏗️ System Architecture
+---
+
+# 🏗️ System Architecture
+
 Email Source
-     ↓
+↓
 Parser Module
-     ↓
+↓
 Embedding Generator
-     ↓
+↓
 Vector Database
-     ↓
+↓
 Semantic Search Engine
-     ↓
+↓
 LLM Summarization Layer
-     ↓
-REST API / UI Interface
-⚙️ Tech Stack
-Backend
-Python
-Flask / FastAPI
-AI / NLP
-OpenAI embeddings / SentenceTransformers
-LLM summarization
-Vector Database
+↓
+REST API Interface
 
-Choose one:
+---
 
-FAISS
-Pinecone
-ChromaDB
-Database
-MongoDB / PostgreSQL
-Frontend (optional)
-React.js
-📂 Project Structure
+# ⚙️ Tech Stack
+
+### Backend
+
+* Python
+* Flask / FastAPI
+
+### AI / NLP
+
+* SentenceTransformers
+* OpenAI Embeddings (optional)
+* LLM summarization pipeline
+
+### Vector Database
+
+* FAISS
+* ChromaDB
+* Pinecone (optional)
+
+### Database
+
+* MongoDB / PostgreSQL
+
+### Frontend (Optional)
+
+* React.js
+
+---
+
+# 📂 Project Structure
+
 OctoMail/
-│
-├── backend/
-│   ├── app.py
-│   ├── routes/
-│   ├── services/
-│   └── embeddings/
-│
-├── vector_store/
-│
-├── summarizer/
-│
-├── email_parser/
-│
-├── frontend/
-│
-├── requirements.txt
-│
-└── README.md
-🔍 How It Works
-Step 1 — Email Parsing
+
+backend/
+app.py
+routes/
+services/
+
+email_parser/
+
+embeddings/
+
+summarizer/
+
+vector_store/
+
+frontend/
+
+requirements.txt
+
+README.md
+
+---
+
+# 🔍 How It Works
+
+### Step 1 — Email Parsing
 
 Emails are extracted from:
 
-Gmail API / IMAP / Local mailbox dataset
+* Gmail API
+* IMAP mailbox
+* local dataset sources
 
-Parsed into structured format:
+Converted into structured format:
 
 sender
 subject
 timestamp
 body
-attachments metadata
-Step 2 — Embedding Generation
+attachment metadata
 
-Each email body is converted into vector representation:
+---
+
+### Step 2 — Embedding Generation
+
+Email content converted into vector representation:
 
 email_text → embedding_vector
 
-using:
+Using SentenceTransformers or OpenAI embeddings.
 
-SentenceTransformers / OpenAI embeddings
-Step 3 — Vector Storage
+---
 
-Embeddings stored inside:
+### Step 3 — Vector Storage
 
-FAISS / Pinecone / ChromaDB
+Embeddings stored inside FAISS / ChromaDB / Pinecone
 
-Enables:
+Enables semantic similarity search instead of keyword matching.
 
-semantic similarity search
+---
 
-instead of keyword search.
+### Step 4 — Semantic Retrieval
 
-Step 4 — Semantic Retrieval
-
-Example:
-
-User query:
+Example query:
 
 meeting with placement coordinator last week
 
-OctoMail retrieves:
+OctoMail retrieves contextually relevant emails even without exact keyword matches.
 
-contextually related emails
+---
 
-not just keyword matches.
+### Step 5 — LLM Summarization
 
-Step 5 — LLM Summarization
-
-Selected emails summarized into:
-
-short actionable insights
-
-Example:
+Example output:
 
 Meeting scheduled Friday 3PM regarding internship documentation submission.
-📡 API Endpoints
-Upload Email
+
+Generated using LLM summarization pipeline.
+
+---
+
+# 📡 API Endpoints
+
+### Upload Email
+
 POST /upload-email
 
-Stores email + embeddings
+Stores email content and embeddings.
 
-Semantic Search
+---
+
+### Semantic Search
+
 GET /search?q=internship deadline
 
-Returns most relevant emails
+Returns most relevant emails.
 
-Summarize Email
+---
+
+### Summarize Email
+
 POST /summarize/{email_id}
 
-Returns concise summary
+Returns concise summary.
 
-Priority Detection
+---
+
+### Priority Detection
+
 GET /priority
 
-Returns important emails
+Returns important emails.
 
-🧪 Example Use Case
+---
 
-User query:
+# 🧪 Example Workflow
+
+User Query:
 
 Find emails about internship deadlines
 
-System workflow:
+Pipeline:
 
 Query embedding generated
-        ↓
-Similarity search performed
-        ↓
-Top emails retrieved
-        ↓
-LLM summarizes results
+↓
+Similarity search executed
+↓
+Top matching emails retrieved
+↓
+LLM summarization applied
 
 Output:
 
-Top 3 internship deadline-related emails with summaries
-📊 Applications
+Top relevant internship-related emails with summaries.
 
-OctoMail can be used in:
+---
 
-enterprise email intelligence platforms
-productivity assistants
-inbox automation tools
-personal knowledge retrieval systems
-smart workplace communication tools
-🛠️ Installation
+# 🛠️ Installation
 
 Clone repository:
 
-git clone https://github.com/yourusername/OctoMail.git
+git clone https://github.com/Harikaran14/OctoMail.git
 
-Navigate inside:
+Move into project directory:
 
 cd OctoMail
 
@@ -202,41 +257,60 @@ Install dependencies:
 
 pip install -r requirements.txt
 
-Run server:
+Run backend server:
 
 python app.py
-📈 Future Improvements
 
-Planned upgrades:
+---
 
-Gmail OAuth integration
-attachment summarization
-email thread summarization
-real-time inbox monitoring
-browser extension support
-mobile support
-conversational email assistant
-knowledge graph generation
-🔐 Security Considerations
+# 📊 Applications
 
-Future enhancements:
+OctoMail can be used in:
 
-OAuth authentication
-encrypted vector storage
-secure API endpoints
-role-based access
-📚 Learning Outcomes
+* enterprise email intelligence systems
+* productivity assistants
+* inbox automation platforms
+* knowledge retrieval systems
+* AI workplace assistants
 
-Through this project:
+---
 
-implemented semantic search pipeline
-worked with vector databases
-applied embedding-based retrieval
-integrated LLM summarization
-built scalable AI backend system
-👨‍💻 Author
+# 🔐 Security Enhancements (Planned)
 
-Harikaran C
+* OAuth authentication
+* encrypted vector storage
+* secure REST endpoints
+* role-based access control
+
+---
+
+# 📈 Future Improvements
+
+* Gmail OAuth integration
+* attachment summarization
+* email thread summarization
+* browser extension support
+* conversational email assistant
+* real-time inbox monitoring
+* knowledge graph integration
+
+---
+
+# 📚 Learning Outcomes
+
+This project demonstrates:
+
+* semantic search pipeline implementation
+* embedding-based retrieval architecture
+* vector database integration
+* LLM summarization workflow
+* scalable backend API design
+
+---
+
+# 👨‍💻 Author
+
+**Harikaran C**
 
 B.Tech — Computer Science
 SSN College of Engineering
@@ -247,13 +321,13 @@ AI Systems
 Backend Engineering
 Distributed Applications
 Software Testing Automation
-⭐ Contribution
 
-Pull requests welcome!
+---
 
-If you like the project:
+# ⭐ Support
+
+If you found this project useful:
 
 Star ⭐ the repository
-📜 License
 
-MIT License
+Contributions welcome!
