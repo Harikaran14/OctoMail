@@ -9,7 +9,6 @@ function cleanEmailTexts(text){
     cleaned=cleaned.replace(/https?:\/\/\S+/g, "");
     cleaned=cleaned.replace(/\s+/g, " ").trim();
     return cleaned;
-
 }
 
 module.exports=cleanEmailTexts;
