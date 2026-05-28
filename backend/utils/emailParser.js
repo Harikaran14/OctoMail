@@ -4,25 +4,65 @@ function getHeader(headers,name){
     );
     return header ? header.value :"";
 }
+function decodeBase64(data) {
 
-function decodeBase64(data){
-    if (!data ) return "";
-    return Buffer.from(data,"base64").toString("utf-8");
+    if (!data) return "";
+
+    return Buffer.from(
+        data.replace(/-/g, "+").replace(/_/g, "/"),
+        "base64"
+    ).toString("utf-8");
 }
 
-function extractBody(payload){
+function extractBody(payload) {
 
-    if (payload.body?.data){
-        return decodeBase64(payload.body.data);
-    }
-    if (payload.parts){
-        for (let part of payload.parts){
-            if (part.mimeType==="text/plain"){
-                return decodeBase64(part.body.data);
+    let body = "";
+
+    function traverseParts(parts) {
+
+        for (let part of parts) {
+
+            // Prefer plain text
+            if (
+                part.mimeType === "text/plain" &&
+                part.body?.data
+            ) {
+
+                body += decodeBase64(part.body.data);
+
+            }
+
+            // Fallback HTML
+            else if (
+                part.mimeType === "text/html" &&
+                part.body?.data &&
+                body.length === 0
+            ) {
+
+                body += decodeBase64(part.body.data);
+            }
+
+            // Recursive traversal
+            if (part.parts) {
+                traverseParts(part.parts);
             }
         }
     }
-    return "";
+
+    // Direct body
+    if (payload.body?.data) {
+
+        body += decodeBase64(payload.body.data);
+
+    }
+
+    // Multipart traversal
+    if (payload.parts) {
+
+        traverseParts(payload.parts);
+    }
+
+    return body;
 }
 
 module.exports={getHeader,extractBody};
