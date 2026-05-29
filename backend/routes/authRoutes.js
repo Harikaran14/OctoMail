@@ -5,7 +5,9 @@ router.get('/google',
     passport.authenticate("google",{
         scope:["profile", "email", "https://www.googleapis.com/auth/gmail.readonly"
 
-        ]
+        ],
+        accessType: "offline",
+        prompt: "consent"
     })
 
 );
