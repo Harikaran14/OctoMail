@@ -2,6 +2,9 @@ const fetchEmails =require("../services/gmailService");
 const {getHeader,extractBody}=require("../utils/emailParser");
 const cleanEmailTexts=require("../utils/cleanEmail");
 const Email=require("../models/Email");
+const decodeRawEmail =require("../utils/decodeRawEmail");
+const parseRawEmail = require("../utils/parseRawEmail");
+
 
 async function getEmails(req,res){
 
@@ -11,17 +14,23 @@ async function getEmails(req,res){
         const parsedEmails=await Promise.all(
         
         emails.map(async email => {
+            const parsed = await parseRawEmail(decodeRawEmail(email.raw));
             const parsedEmail={
                 userId: req.user.googleId,
                 gmailId: email.id,
                 threadId: email.threadId,
                 snippet: email.snippet,
-                subject: getHeader(email.payload.headers,"Subject"),
-                sender:getHeader(email.payload.headers,"From"),
-                body: cleanEmailTexts(extractBody(email.payload)),
-                receivedAt: new Date(getHeader(email.payload.headers,"Date"))
+                //subject: getHeader(email.payload.headers,"Subject"),
+               // sender:getHeader(email.payload.headers,"From"),
+               // body: cleanEmailTexts(extractBody(email.payload)),
+               subject: parsed.subject,
+               sender: parsed.sender,
+               body: cleanEmailTexts(parsed.body || parsed.html || ""),
+                receivedAt: parsed.receivedAt
+        
             
             };
+            
             const existingEmail = await Email.findOne({
                 gmailId: parsedEmail.gmailId
             });
@@ -60,4 +69,16 @@ async function getStoredEmails(req,res){
         res.status(500).json({error: `Failed to retrieve email from MongoDB `});
     }
 }
-module.exports={getEmails,getStoredEmails};
+
+async function getEmailsByCategory(req,res
+){
+
+    const emails = await Email.find({
+        userId: req.user.googleId,
+        category: req.params.category.toLowerCase()
+    });
+
+    console.log(emails);
+    res.json(emails);
+}
+module.exports={getEmails,getStoredEmails,getEmailsByCategory};
