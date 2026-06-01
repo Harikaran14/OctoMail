@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const EmailSchema = new mongoose.Schema({
-    userId:{type: String, required: true},
+    userId:{type: String, required: true, index: true},
     gmailId: {type:String, required: true, unique: true},
     threadId: String,
     sender: String,
@@ -33,7 +33,12 @@ const EmailSchema = new mongoose.Schema({
     deadlines:{
         type:[String],
         default:[]
-    }
+    },
+    category:{
+        type:String,
+        default: "Other"
+    },
+    lastSyncedAt: Date
 },{timestamps:true
 
 });
