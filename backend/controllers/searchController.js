@@ -1,6 +1,5 @@
 const Email = require("../models/Email");
 const generateEmbedding = require("../services/embeddingService");
-const cosineSimilarity = require("compute-cosine-similarity");
 
 
 async function semanticSearch(req,res){
@@ -8,25 +7,58 @@ async function semanticSearch(req,res){
     try{
         console.log("Inside semantic search ");
         const {query}=req.body;
-        const queryEmbedding = await generateEmbedding(query);
-
-        const emails= await Email.find({
-            userId:req.user.googleId
-        });
+        if (
+            !query ||
+            typeof query !== "string" ||
+            query.trim().length < 2
+        ) {
+            return res.status(400).json({
+                error: "Invalid query"
+            });
+        }
         
-        const scoredEmails = emails.map(email=>{
-            let similarity=0;
-            if (email.embedding && email.embedding.length>0){
-                similarity= cosineSimilarity(queryEmbedding,email.embedding);
+        const queryEmbedding = await generateEmbedding(query);
+        const results = await Email.aggregate([
+            {
+                $vectorSearch: {
+                    index: "vector_index",
+                    path: "embedding",
+                    queryVector: queryEmbedding,
+                    numCandidates: 100,
+                    limit:5,
+                    filter:{
+                        userId: req.user.googleId
+                    }
+                }
+            },{
+                $project:{
+                    subject:1,
+                    sender:1,
+                    summary:1,
+                    priority:1,
+                    tasks:1,
+                    body:1,
+                    receivedAt:1,
 
+                    score:{
+                        $meta: "vectorSearchScore"
+                    }
+
+
+                }
+            },
+            {
+
+                $match: {
+                    score: {
+                        $gte: 0.7
+                    }
+                }
             }
-            return {...email.toObject(),similarity}
+        ]);
 
-        });
-        scoredEmails.sort((a,b) =>b.similarity-a.similarity);
-        const topResults=scoredEmails.slice(0,5);
 
-        res.json(topResults);
+        res.json(results);
 
     }
     catch(err){
