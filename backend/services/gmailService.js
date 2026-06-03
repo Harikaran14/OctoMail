@@ -12,7 +12,7 @@ async function fetchEmails(accessToken){
 
     const response = await gmail.users.messages.list({
         userId: "me",
-        maxResults: 10
+        maxResults: 15
     });
 
     const messages=  response.data.messages || [];
