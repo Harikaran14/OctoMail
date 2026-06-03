@@ -11,9 +11,7 @@ async function refreshAccessToken(refreshToken){
             grant_type: "refresh_token"
         }
     );
-
     return response.data.access_token;
-
 } catch(err) {
 
     console.log(
@@ -23,5 +21,4 @@ async function refreshAccessToken(refreshToken){
     throw err;
 }
 }
-
 module.exports =refreshAccessToken;
