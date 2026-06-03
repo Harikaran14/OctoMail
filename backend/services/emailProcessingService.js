@@ -2,6 +2,7 @@
 const Email = require("../models/Email");
 const generateEmbedding= require("../services/embeddingService");
 const generateLLMResponse = require("../services/llmService");
+const createNotificationForEmail = require("./notificationService");
 
 function delay(ms) {
     return new Promise(resolve =>
@@ -37,10 +38,10 @@ async function processingSingleEmail(email){
     Format:
     {
     "summary": "string",
-    "priority": "High/Medium/Low",
-    "category": "string"
+    "priority": "High/Medium/Low",lowercase
+    "category": "string",lowercase
     "tasks": [],
-    "deadlines": []
+    "deadlines": [],in Date() format
     }
 
     Rules:
@@ -76,9 +77,10 @@ async function processingSingleEmail(email){
         email.priority=parsedResponse.priority.toLowerCase();
         email.tasks=parsedResponse.tasks ||[];
         email.deadlines=parsedResponse.deadlines || [];
-        email.category= parsedResponse.category || "Other";
+        email.category= parsedResponse.category.toLowerCase() || "other";
         email.processed=true;
         await email.save();
+        await createNotificationForEmail(email);
                 
 
 }
