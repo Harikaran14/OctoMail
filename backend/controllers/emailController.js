@@ -4,7 +4,7 @@ const cleanEmailTexts=require("../utils/cleanEmail");
 const Email=require("../models/Email");
 const decodeRawEmail =require("../utils/decodeRawEmail");
 const parseRawEmail = require("../utils/parseRawEmail");
-
+const parseEmail = require("../services/emailParserService");
 
 async function getEmails(req,res){
 
@@ -14,22 +14,7 @@ async function getEmails(req,res){
         const parsedEmails=await Promise.all(
         
         emails.map(async email => {
-            const parsed = await parseRawEmail(decodeRawEmail(email.raw));
-            const parsedEmail={
-                userId: req.user.googleId,
-                gmailId: email.id,
-                threadId: email.threadId,
-                snippet: email.snippet,
-                //subject: getHeader(email.payload.headers,"Subject"),
-               // sender:getHeader(email.payload.headers,"From"),
-               // body: cleanEmailTexts(extractBody(email.payload)),
-               subject: parsed.subject,
-               sender: parsed.sender,
-               body: cleanEmailTexts(parsed.body || parsed.html || ""),
-                receivedAt: parsed.receivedAt
-        
-            
-            };
+            const parsedEmail= parseEmail(email,req.user.googleId);
             
             const existingEmail = await Email.findOne({
                 gmailId: parsedEmail.gmailId
