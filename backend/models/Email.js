@@ -36,9 +36,9 @@ const EmailSchema = new mongoose.Schema({
     },
     category:{
         type:String,
-        default: "Other"
-    },
-    lastSyncedAt: Date
+        default: "other"
+    }
+    
 },{timestamps:true
 
 });
