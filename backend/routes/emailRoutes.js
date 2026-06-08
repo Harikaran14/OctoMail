@@ -3,6 +3,9 @@ const {getEmails,getStoredEmails, getEmailsByCategory} = require("../controllers
 const ensureAuth =require("../middleware/authMiddleware");
 const refreshAccessToken =
 require("../services/tokenService");
+const User = require("../models/User");
+const syncUser = require("../services/gmailSyncService");
+const syncQueue= require("../queues/syncQueue");
 
 router.get(
     "/test-token",
@@ -19,6 +22,9 @@ router.get(
 
     }
 );
+
+
+
 router.get("/fetch",ensureAuth, getEmails);
 router.get("/stored",ensureAuth,getStoredEmails);
 router.get("/category/:category", ensureAuth,getEmailsByCategory);
