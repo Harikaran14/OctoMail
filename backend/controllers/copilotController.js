@@ -132,10 +132,10 @@ async function askCopilot(req,res){
 async function clearChat(
     req,res
 ){
+    
     await ChatMessage.deleteMany({
         userId: user.googleId
     });
     res.json({message: "Chat is cleared"})
 }
 module.exports = {askCopilot ,clearChat };
-
