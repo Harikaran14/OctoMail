@@ -23,7 +23,57 @@ router.get(
     }
 );
 
+router.get(
+    "/test-sync",
 
+    async(req,res)=>{
+
+        const user =
+            await User.findOne({
+                googleId:
+                    req.user.googleId
+            });
+
+        const result =
+            await syncUser(
+                user
+            );
+
+        res.json(
+            result
+        );
+
+    }
+);
+router.get(
+    "/test-sync-job",
+
+    async(req,res)=>{
+        const user =
+            await User.findOne({
+                googleId:
+                    req.user.googleId
+            });
+
+
+        await syncQueue.add(
+
+            "sync-user",
+
+            {
+                userId:
+                    user._id
+            }
+
+        );
+
+        res.json({
+            message:
+                "Sync job queued"
+        });
+
+    }
+);
 
 router.get("/fetch",ensureAuth, getEmails);
 router.get("/stored",ensureAuth,getStoredEmails);
