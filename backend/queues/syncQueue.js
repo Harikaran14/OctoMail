@@ -5,4 +5,5 @@ const syncQueue = new Queue("gmail-sync",{
     connection: redisConnection
 });
 
+
 module.exports= syncQueue;
