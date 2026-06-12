@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const EmailSchema = new mongoose.Schema({
     userId:{type: String, required: true, index: true},
     gmailId: {type:String, required: true, unique: true},
