@@ -7,11 +7,18 @@ const passport = require("passport");
 require("./config/passport");
 const authRoutes = require("./routes/authRoutes");
 const emailRoutes=require("./routes/emailRoutes");
+const aiRoutes = require("./routes/aiRoutes")
+const searchRoutes = require("./routes/searchRoutes");
+const copilotRoutes= require("./routes/copilotRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const digestRoutes = require("./routes/digestRoutes");
+
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -24,7 +31,11 @@ app.use(passport.session());
 
 app.use('/auth',authRoutes);
 app.use("/emails",emailRoutes);
-
+app.use("/ai",aiRoutes);
+app.use("/search",searchRoutes);
+app.use("/copilot",copilotRoutes);
+app.use("/notifications",notificationRoutes);
+app.use("/digest",digestRoutes);
 
 app.get('/',(req,res)=>{
     res.send("Octomail Backend Running");
