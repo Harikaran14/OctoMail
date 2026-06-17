@@ -9,9 +9,39 @@ function AuthProvider({children}){
     });
 
     const [isAuthenticated, setIsAuthenticated]= useState(false);
+    function login(){
 
+    setUser({
+
+        name:"Harikaran",
+
+        email:"hari@gmail.com"
+
+    });
+
+    setIsAuthenticated(
+        true
+    );
+
+}
+
+function logout(){
+
+    setUser({
+
+        name:"Demo User",
+
+        email:"demo@octomail.ai"
+
+    });
+
+    setIsAuthenticated(
+        false
+    );
+
+}
     return (
-        <AuthContext.Provider value = {{user,setUser,isAuthenticated,setIsAuthenticated}}>
+        <AuthContext.Provider value = {{user,setUser,isAuthenticated,setIsAuthenticated,login,logout}}>
 
             {children}
         </AuthContext.Provider>
