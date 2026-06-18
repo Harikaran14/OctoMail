@@ -1,24 +1,26 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+
+import useAuth from "../context/useAuth";
+import { Link } from "react-router-dom";
 
 function Sidebar(){
-    const {user,setUser,isAuthenticated,setIsAuthenticated}= useContext(AuthContext);
+    const {user,isAuthenticated,login,logout}= useAuth();
 
     return (
         <div>
             <h2>
-                SideBar
+                OctoMail
             </h2>
-            <button onClick={()=>{
-                setUser({name:"Harikaran",email:"Hari@gmail.com"});
-                setIsAuthenticated(true);
-
-            }}>Login</button>
-            <button onClick={()=>{
-                setUser({name:"Demo User",email:"demo@octomail.ai"});
-                setIsAuthenticated(false);
-
-            }}>LogOut</button>
+            <hr/>
+            <Link to="/">DashBoard</Link>
+            <Link to="/emails">Emails</Link>
+            <Link to="/copilot">Copilot</Link>
+            <Link to="/notification">Notification</Link>
+            {isAuthenticated 
+            ? 
+            <button onClick={logout}>Logout</button>
+            :
+            <button onClick={login}>LogIn</button>
+            }
             <p>{isAuthenticated ? "Logged IN" : "Guest User"}</p>
             <p>{user.name}</p>
             <p>{user.email}</p>
