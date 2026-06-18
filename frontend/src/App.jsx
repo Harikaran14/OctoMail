@@ -6,12 +6,13 @@ import './App.css'
 import TestCounter from './components/TestCounter'
 import DashboardPage from './pages/DashboardPage'
 import Sidebar from './components/SideBar'
+import Layout from './components/Layout'
+import AppRoutes from './routes/AppRoutes'
+
 function App() {
   return (
     <>
-     <TestCounter></TestCounter>
-     <Sidebar></Sidebar>
-     <DashboardPage />
+     <Layout><AppRoutes></AppRoutes></Layout>
     </>
   )
 }
