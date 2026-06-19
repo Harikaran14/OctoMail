@@ -9,6 +9,7 @@ function delay(ms) {
         setTimeout(resolve, ms)
     );
 }
+
 async function processingSingleEmail(email){
     await delay(4001);
     const prompt = `
@@ -69,16 +70,26 @@ async function processingSingleEmail(email){
             priority:"unknown"
         };
     }
-        const text=email.body+email.subject+email.snippet;
-        const embedding = await generateEmbedding(text);
-        email.embedding=embedding;
+        
 
         email.summary=parsedResponse.summary;
-        email.priority=parsedResponse.priority.toLowerCase();
+        email.priority=parsedResponse.priority.toLowerCase() || "unknown";
         email.tasks=parsedResponse.tasks ||[];
         email.deadlines=parsedResponse.deadlines || [];
         email.category= parsedResponse.category.toLowerCase() || "other";
         email.processed=true;
+        const text = `
+Subject: ${email.subject}
+
+Sender: ${email.sender}
+
+Summary: ${email.summary}
+
+Body: ${email.body}
+`;
+        
+        const embedding = await generateEmbedding(text);
+        email.embedding=embedding;
         await email.save();
         await createNotificationForEmail(email);
                 

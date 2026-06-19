@@ -5,16 +5,18 @@ const Email=require("../models/Email");
 const decodeRawEmail =require("../utils/decodeRawEmail");
 const parseRawEmail = require("../utils/parseRawEmail");
 const parseEmail = require("../services/emailParserService");
+const refreshAccessToken = require("../services/tokenService");
 
 async function getEmails(req,res){
 
     try{
-        const accessToken=req.user.accessToken;
+        
+        const accessToken= await refreshAccessToken( req.user.refreshToken);
         const emails = await fetchEmails(accessToken);
         const parsedEmails=await Promise.all(
         
         emails.map(async email => {
-            const parsedEmail= parseEmail(email,req.user.googleId);
+            const parsedEmail= await parseEmail(email,req.user.googleId);
             
             const existingEmail = await Email.findOne({
                 gmailId: parsedEmail.gmailId
@@ -55,6 +57,14 @@ async function getStoredEmails(req,res){
     }
 }
 
+async function getEmailById(req,res){
+    const email= await Email.findOne({
+        _id:req.params.id
+    });
+    res.json(email);
+
+}
+
 async function getEmailsByCategory(req,res
 ){
 
@@ -66,4 +76,4 @@ async function getEmailsByCategory(req,res
     console.log(emails);
     res.json(emails);
 }
-module.exports={getEmails,getStoredEmails,getEmailsByCategory};
+module.exports={getEmails,getStoredEmails,getEmailsByCategory, getEmailById};

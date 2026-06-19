@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {getEmails,getStoredEmails, getEmailsByCategory} = require("../controllers/emailController");
+const {getEmails,getStoredEmails, getEmailsByCategory, getEmailById} = require("../controllers/emailController");
 const ensureAuth =require("../middleware/authMiddleware");
 const refreshAccessToken =
 require("../services/tokenService");
@@ -78,5 +78,6 @@ router.get(
 router.get("/fetch",ensureAuth, getEmails);
 router.get("/stored",ensureAuth,getStoredEmails);
 router.get("/category/:category", ensureAuth,getEmailsByCategory);
+router.get("/:id" , ensureAuth, getEmailById);
 module.exports=router;
 
