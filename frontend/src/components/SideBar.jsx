@@ -15,15 +15,22 @@ function Sidebar(){
             <Link to="/emails">Emails</Link>
             <Link to="/copilot">Copilot</Link>
             <Link to="/notification">Notification</Link>
-            {isAuthenticated 
-            ? 
-            <button onClick={logout}>Logout</button>
-            :
-            <button onClick={login}>LogIn</button>
-            }
             <p>{isAuthenticated ? "Logged IN" : "Guest User"}</p>
+            {isAuthenticated
+            ?(
+            <>
             <p>{user.name}</p>
             <p>{user.email}</p>
+            <button onClick={logout}>Logout</button>
+            </>)
+            :
+            (<>
+            <p>Demo User</p>
+            <p>DemoMail.octomail.ai</p>
+            <button onClick={login}>Sign In with Google</button>
+            </>)
+            }
+            
             
         </div>
     )
