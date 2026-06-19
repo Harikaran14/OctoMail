@@ -5,20 +5,32 @@ const ChatMessage = require("../models/ChatMessage");
 
 async function askCopilot(req,res){
     try{
-        const {question }= req.body;
+        const {question , emailId }= req.body;
         if (!question){
             return res.status(400).json({
                 error:"Question required"
             });
 
         }
-
+        
         const history = await ChatMessage.find({
             userId:req.user.googleId
         }).sort({createdAt: -1}).limit(10);
 
         const convohistory = history.reverse().map(msg => `${msg.role }: ${msg.content}`).join("\n");
-    
+        let emailsForContext=[];
+        if (emailId){
+            const email= await Email.findOne({
+                _id:emailId,
+                userId:req.user.googleId}
+            );
+            if (!email){
+                return res.status(404).json({error:"Email not found"});
+            }
+            emailsForContext=[email];
+
+        }
+        else{
         const questionEmbedding = await generateEmbedding(question);
         let results = await Email.aggregate([
             {
@@ -42,28 +54,30 @@ async function askCopilot(req,res){
                     tasks: 1,
                     deadlines: 1,
                     priority: 1,
+                    body:1,
+                    category:1,
                     score: {
                         $meta: "vectorSearchScore"
                     }
                 }
             }
         ]) ;
-        const filteredResults =
+
+        const emailsForContext=
         results.filter(
-            email => email.score > 0.7
+            email => email.score > 0.8
         );
-        const emailsForContext =
-            filteredResults.length > 0
-                ? filteredResults
-                : results.slice(0,3);
-        
-        const context = emailsForContext.map(email=>`Subject: ${email.subject}           
+        if (emailsForContext.length === 0){
+            return res.json({answer:"I couldn't find relevant email to answer your query. ",emailsUsed:0,sources:[]});
+        }
+    }
+        const context = emailsForContext.map(email=>
+            `Subject: ${email.subject}           
             Summary: ${email.summary}
             Sender: ${email.sender}
             Priority: ${email.priority}
-            
-            Tasks:
-            ${email.tasks?.join(", ")}
+            Body: ${email.body}
+            Tasks: ${email.task.join(", ") || ""}
 
             `).join("\n \n");
         
@@ -81,6 +95,12 @@ async function askCopilot(req,res){
         - Prioritize interview, placement, work, banking, and academic emails over promotional emails.
         - If multiple tasks exist, group and rank them by importance.
         - Mention which email or sender each task came from when useful.
+        1.If information is not present in the emails, say so.
+        2. Never invent deadlines.
+        3. Never invent tasks.
+        4. Mention senders when useful.
+        5. Give concise answers.
+        6. Use bullet points when multiple emails are involved.
 
         Conversation History: 
 
@@ -98,12 +118,12 @@ async function askCopilot(req,res){
         const answer= await generateLLMResponse(prompt);
         await ChatMessage.create({
             userId:req.user.googleId,
-            role:"user",
+            role:"User",
             content:question
         });
         await ChatMessage.create({
             userId:req.user.googleId,
-            role:"AI",
+            role:"Assistant",
             content:answer
         });
 
@@ -132,10 +152,15 @@ async function askCopilot(req,res){
 async function clearChat(
     req,res
 ){
-    
+    try{
     await ChatMessage.deleteMany({
-        userId: user.googleId
+        userId: req.user.googleId
     });
-    res.json({message: "Chat is cleared"})
+    res.json({message: "Chat is cleared"});
+}
+catch(error){
+    console.log(error);
+    res.status(500).json({error:"Failed to clear chat"});
+}
 }
 module.exports = {askCopilot ,clearChat };

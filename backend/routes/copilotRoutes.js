@@ -3,5 +3,5 @@ const ensureAuth =require("../middleware/authMiddleware");
 const {askCopilot, clearChat} = require("../controllers/copilotController");
 
 router.post("/ask",ensureAuth,askCopilot);
-router.delete("/chat",ensureAuth,clearChat);
+router.delete("/clear",ensureAuth,clearChat);
 module.exports = router;
