@@ -7,24 +7,32 @@ import DigestCard from "../components/DigestCard";
 import mockDigest from "../mock/mockDigest";
 import EmailCard from "../components/EmailCard";
 import { useNavigate } from "react-router-dom";
+import useDigest from "../hooks/useDigest";
+import useNotifications from "../hooks/useNotifications";
+import useEmails from "../hooks/useEmails";
 function DashboardPage(){
 
     useEffect(()=>{
         console.log("Dashboard Loaded");
 
     },[]);
-    const totalEmails= mockEmails.length;
-    const unreadNotification= mockNotifications.filter(notification => !notification.read).length;
-    const highPriorityEmails= mockEmails.filter(email=> email.priority=="High").length;
-    const pendingTasks=mockEmails.reduce((total,email)=>total+email.tasks.length,0);
     const navigate = useNavigate();
+    const { digest} = useDigest();
+    const { notifications } = useNotifications();
+    const { emails }= useEmails();
+
+    const totalEmails= emails.length;
+    const unreadNotification= notifications.filter(notification => !notification.read).length;
+    const highPriorityEmails= emails.filter(email=> email.priority=="High").length;
+    const pendingTasks=emails.reduce((total,email)=>total+email.tasks.length,0);
+    
     return (
         <div>
             <h1>DashBoard</h1>
 
 
             <h2>Digest</h2>
-            <DigestCard digest={mockDigest}></DigestCard>
+            {digest && <DigestCard digest={digest}></DigestCard>}
             <h2>STATS</h2>
             
 
@@ -33,14 +41,14 @@ function DashboardPage(){
             <StatCard title="High Priority Emails" value={highPriorityEmails}></StatCard>
             <StatCard title="Pending Tasks" value={pendingTasks}></StatCard>
             <h2>Recent Notifications</h2>
-            {mockNotifications.map(
+            {notifications.map(
                 notification=>(
                     <NotificationCard key={notification._id} {...notification}></NotificationCard>
                 )
             )
             }
             <h2>Recent Emails</h2>
-            {mockEmails.slice(0,3).map(
+            {emails.slice(0,3).map(
                 email=>(
                     <EmailCard key={email._id} email={email} onclick={()=>navigate(`/emails/${email._id}`)}></EmailCard>
                 )
