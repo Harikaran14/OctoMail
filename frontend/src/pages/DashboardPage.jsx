@@ -40,14 +40,14 @@ function DashboardPage(){
             <StatCard title="Unread Notification" value={unreadNotification}></StatCard>
             <StatCard title="High Priority Emails" value={highPriorityEmails}></StatCard>
             <StatCard title="Pending Tasks" value={pendingTasks}></StatCard>
-            <h2>Recent Notifications</h2>
-            {notifications.map(
+            <h2>Recent Important Emails </h2>
+            {notifications.slice(0,3).map(
                 notification=>(
                     <NotificationCard key={notification._id} {...notification}></NotificationCard>
                 )
             )
             }
-            <h2>Recent Emails</h2>
+            <h2>Latest Emails</h2>
             {emails.slice(0,3).map(
                 email=>(
                     <EmailCard key={email._id} email={email} onclick={()=>navigate(`/emails/${email._id}`)}></EmailCard>

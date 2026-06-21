@@ -17,7 +17,7 @@ function EmailsPage(){
         hasTasks:false,
         hasDeadlines: false,
         today:false,
-        lastweek:false
+        lastWeek:false
     });
     const[sortBy,setSortBy]=useState("latest");
 
@@ -42,6 +42,7 @@ function EmailsPage(){
     
   }
   let displayedEmails= semanticResults ?? emails;
+  displayedEmails=[...displayedEmails];
   if (filters.priority!=="all"){
     displayedEmails=displayedEmails.filter(email=>email.priority?.toLowerCase()===filters.priority);
   }
@@ -138,7 +139,7 @@ if(
 
 }
 if(
-    filters.lastweek
+    filters.lastWeek
 ){
 
     const weekAgo =
@@ -218,6 +219,14 @@ if(
                 onChange={(event)=>setSearchTerm(event.target.value)}
             ></input>
             <button onClick={handleSemanticSearch}>Search</button>
+            <button
+                onClick={()=>{
+                    setSemanticResults(null);
+                    setSearchTerm("");
+                }}
+                >
+                Clear Search
+                </button>
             <select
                 value={filters.priority}
                 onChange={(e)=>setFilters(prev=>({...prev, priority:e.target.value}))}
@@ -260,6 +269,70 @@ if(
                 ))
                 }
             </select>
+           <label>
+             <input type="checkbox" checked={filters.hasTasks} onChange={()=>setFilters(prev=>({...prev,hasTasks: !prev.hasTasks}))}/>Has Tasks</label>
+            <label>
+<input
+type="checkbox"
+checked={filters.hasDeadlines}
+onChange={()=>
+setFilters(prev=>({
+...prev,
+hasDeadlines:!prev.hasDeadlines
+}))
+}
+/>
+Has Deadlines
+</label>
+
+<label>
+<input
+type="checkbox"
+checked={filters.today}
+onChange={()=>
+setFilters(prev=>({
+...prev,
+today:!prev.today
+}))
+}
+/>
+Today
+</label>
+
+<label>
+<input
+type="checkbox"
+checked={filters.lastWeek}
+onChange={()=>
+setFilters(prev=>({
+...prev,
+lastWeek:!prev.lastWeek
+}))
+}
+/>
+Last Week
+</label>
+
+<select
+value={sortBy}
+onChange={(e)=>
+setSortBy(e.target.value)
+}
+>
+<option value="latest">
+Latest
+</option>
+
+<option value="oldest">
+Oldest
+</option>
+
+<option value="priority">
+Priority
+</option>
+
+</select>
+            
             {displayedEmails.map(email=>(
                 <EmailCard key={email._id} email={email} onclick={()=>navigate(`/emails/${email._id}`)}></EmailCard>
             ))}
