@@ -10,6 +10,17 @@ function EmailsPage(){
     const {emails , loading , error} = useEmails();
     const [semanticResults,setSemanticResults]=useState(null);
     const navigate=useNavigate();
+    const [filters, setFilters]=useState({
+        priority:"all",
+        category:"all",
+        sender:"all",
+        hasTasks:false,
+        hasDeadlines: false,
+        today:false,
+        lastweek:false
+    });
+    const[sortBy,setSortBy]=useState("latest");
+
     if (loading){
         return (<h2>Loading...</h2>)
 
@@ -29,12 +40,129 @@ function EmailsPage(){
     setSemanticResults(data);
     
   }
-  const filteredEmails= semanticResults ?? emails;
-    
+  const displayedEmails= semanticResults ?? emails;
+  if (filters.priority!=="all"){
+    displayedEmails=displayedEmails.filter(email=>email.priority?.toLowerCase()===filters.priority);
+  }
+  if(
+    filters.category !==
+    "all"
+){
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        email.category
+        ?.toLowerCase()
+
+        ===
+
+        filters.category
+
+    );
+
+}if(
+    filters.sender !==
+    "all"
+){
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        email.sender ===
+        filters.sender
+
+    );
+
+}
+if(
+    filters.hasTasks
+){
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        email.tasks &&
+        email.tasks.length > 0
+
+    );
+
+}
+if(
+    filters.hasDeadlines
+){
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        email.deadlines &&
+        email.deadlines.length > 0
+
+    );
+
+}
+if(
+    filters.today
+){
+
+    const today =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        new Date(
+            email.receivedAt
+        )
+        .toISOString()
+        .split("T")[0]
+
+        ===
+
+        today
+
+    );
+
+}
+if(
+    filters.lastWeek
+){
+
+    const weekAgo =
+    new Date();
+
+    weekAgo.setDate(
+        weekAgo.getDate()-7
+    );
+
+    displayedEmails =
+    displayedEmails.filter(
+
+        email =>
+
+        new Date(
+            email.receivedAt
+        ) >= weekAgo
+
+    );
+
+}
     return (
         <div>
             <h1>Emails</h1>
-            <button onClick={async ()=>{ const resp=await api.post("/ai/process");}}>Force Sync</button>
+            <button onClick={async ()=>{ const fetch= await api.get("emails/fetch"); const resp=await api.post("/ai/process");}}>Force Sync</button>
             <input 
                 type="text"
                 placeholder="Search emails inteligently"

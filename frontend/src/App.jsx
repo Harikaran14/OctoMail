@@ -8,8 +8,17 @@ import DashboardPage from './pages/DashboardPage'
 import Sidebar from './components/SideBar'
 import Layout from './components/Layout'
 import AppRoutes from './routes/AppRoutes'
+import useAuth from './context/useAuth'
+
 
 function App() {
+  const { loading }= useAuth();
+
+  if (loading ){
+    return (
+      <h2>Loading...</h2>
+    )
+  }
   return (
     <>
      <Layout><AppRoutes></AppRoutes></Layout>
