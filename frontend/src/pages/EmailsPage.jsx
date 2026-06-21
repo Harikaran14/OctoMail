@@ -28,6 +28,7 @@ function EmailsPage(){
     if (error){
         return (<h2>{error}</h2>)
     }
+        const senders = [...new Set(emails.map(email=>email.sender))];
    // const filteredEmails= emails.filter(email=>
   //      email.subject.toLowerCase().includes(searchTerm.toLowerCase())
   //  );
@@ -40,7 +41,7 @@ function EmailsPage(){
     setSemanticResults(data);
     
   }
-  const displayedEmails= semanticResults ?? emails;
+  let displayedEmails= semanticResults ?? emails;
   if (filters.priority!=="all"){
     displayedEmails=displayedEmails.filter(email=>email.priority?.toLowerCase()===filters.priority);
   }
@@ -137,7 +138,7 @@ if(
 
 }
 if(
-    filters.lastWeek
+    filters.lastweek
 ){
 
     const weekAgo =
@@ -159,6 +160,53 @@ if(
     );
 
 }
+if (sortBy === "latest"){
+    displayedEmails.sort((a,b)=>new Date(b.receivedAt)- new Date(a.receivedAt));
+}
+if (sortBy === "oldest"){
+    displayedEmails.sort((a,b)=>new Date(a.receivedAt)- new Date(b.receivedAt));
+}
+if(
+    sortBy==="priority"
+){
+
+    const weight = {
+
+        high:3,
+
+        medium:2,
+
+        low:1
+
+    };
+
+    displayedEmails.sort(
+
+        (a,b)=>
+
+        (
+            weight[
+                b.priority
+                ?.toLowerCase()
+            ]
+
+            || 0
+        )
+
+        -
+
+        (
+            weight[
+                a.priority
+                ?.toLowerCase()
+            ]
+
+            || 0
+        )
+
+    );
+
+}
     return (
         <div>
             <h1>Emails</h1>
@@ -170,7 +218,49 @@ if(
                 onChange={(event)=>setSearchTerm(event.target.value)}
             ></input>
             <button onClick={handleSemanticSearch}>Search</button>
-            {filteredEmails.map(email=>(
+            <select
+                value={filters.priority}
+                onChange={(e)=>setFilters(prev=>({...prev, priority:e.target.value}))}
+            >
+
+                <option value="all">all</option>
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+            </select>
+            <select value={filters.category} 
+            onChange={(e)=>setFilters(prev=>({...prev,category: e.target.value}))}
+            >
+                <option value="all">All Categories</option>
+                <option value="placement">Placement</option>
+                <option value="academic">Academic</option>
+                <option value="coding">Coding</option>
+                <option value="shopping">Shopping</option>
+                <option value="finance">Finance</option>
+                <option value="newsletter">Newsletter</option>
+                <option value="social">Social</option>
+                <option value="other">Other</option>
+            </select>
+                
+            <select value={filters.sender}
+                onChange={(e)=>setFilters(prev=>({...prev, sender:e.target.value}))}
+            >
+                <option value="all">
+                All Senders
+                </option>
+
+                {
+                senders.map(sender=>(
+                <option
+                key={sender}
+                value={sender}
+                >
+                {sender}
+                </option>
+                ))
+                }
+            </select>
+            {displayedEmails.map(email=>(
                 <EmailCard key={email._id} email={email} onclick={()=>navigate(`/emails/${email._id}`)}></EmailCard>
             ))}
         </div>
