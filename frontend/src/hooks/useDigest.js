@@ -27,6 +27,7 @@ function useDigest(){
                 setLoading(false);
             }
         }
+        loadDigest();
     },[isAuthenticated]);
     return { digest, loading, error };
 

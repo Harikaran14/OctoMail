@@ -1,15 +1,11 @@
-
-function NotificationCard({title, message, type}){
-
-    return (
-        <div>
-
-            <h3>{title}</h3>
-            <h3>{message}</h3>
-            <h3>{type}</h3>
-
-        </div>
-    );
+function NotificationCard({ title, message, type }) {
+  return (
+    <div className="notification-card">
+      <h3>{title}</h3>
+      <p className="notification-message">{message}</p>
+      <span className="notification-type">{type}</span>
+    </div>
+  );
 }
 
 export default NotificationCard;

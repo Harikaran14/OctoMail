@@ -18,7 +18,7 @@ require("../queues/digestQueue");
 
     cron.schedule(
 
-        "0 8 * * *",
+        "*/2 * * * *",
 
         async()=>{
 
