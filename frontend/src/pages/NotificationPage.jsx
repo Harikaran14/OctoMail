@@ -138,7 +138,7 @@ function NotificationPage(){
             </h2>
 
             {
-            topSenders.slice(0,3).map(sender=>(
+            topSenders.map(sender=>(
                 <p
                 key={sender.sender}
                 >
