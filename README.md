@@ -1,314 +1,418 @@
-# 📬 OctoMail – AI-Powered Smart Inbox Productivity Assistant
+# 🚀 OctoMail - AI Powered Email Intelligence Platform
 
-OctoMail is a full-stack AI-powered email productivity assistant built using the **MERN stack**, **Gmail API**, and **LLM-based semantic processing**.
-It intelligently summarizes emails, extracts tasks & deadlines, classifies priorities, enables semantic inbox search using embeddings, and generates daily productivity insights.
+An AI-powered email productivity platform that transforms a cluttered inbox into actionable insights using Large Language Models, Semantic Search, Vector Embeddings, and Retrieval-Augmented Generation (RAG).
 
-Designed as a **production-style applied AI system**, InboxIQ demonstrates modern **LLM integration, vector search, async pipelines, and scalable backend architecture**.
+## ✨ Features
 
----
+### 📧 Gmail Integration
 
-# 🚀 Features
+* Google OAuth 2.0 Authentication
+* Gmail API Integration
+* Secure inbox access
+* Incremental email synchronization using Gmail History API
+* Automatic token refresh support
 
-## 🔐 Authentication
+### 🤖 AI Email Processing
 
-* Google OAuth 2.0 login
-* Secure access token handling
-* Gmail permission-based inbox access
+Each email is automatically analyzed and enriched with:
 
-## 📥 Email Intelligence Pipeline
+* AI-generated Summary
+* Priority Classification (High / Medium / Low)
+* Category Classification
+* Task Extraction
+* Deadline Detection
+* Vector Embedding Generation
 
-* Fetch unread & recent emails from Gmail API
-* Decode base64 email payloads
-* Clean HTML email content
-* Thread-aware processing support
+Supported Categories:
 
-## 🤖 AI-Powered Processing
-
-* Email summarization (LLM)
-* Priority classification (High / Medium / Low)
-* Task extraction
-* Deadline detection
-* Smart reply generation
-
-## 🔎 Semantic Inbox Search (Vector Search)
-
-* Generate embeddings for email content
-* MongoDB Atlas vector indexing
-* Search emails by meaning instead of keywords
-
-Example:
-
-```
-show emails about deadlines
-```
-
-Returns relevant emails even without keyword matches.
-
-## 📊 Analytics Dashboard
-
-Visual insights including:
-
-* Priority distribution
-* Email frequency trends
-* Top senders
-* Task detection statistics
-* Daily inbox activity summary
-
-## 🗓 Daily Digest Generator
-
-Automatically generates:
-
-```
-Today's Summary:
-
-2 urgent emails
-3 action-required tasks
-5 informational emails
-```
-
-## 🧠 Email Clustering
-
-Automatically groups emails into categories like:
-
-* Work
+* Placement
+* Academic
+* Coding
 * Finance
 * Shopping
-* Meetings
-* Deadlines
-
-Using semantic similarity.
+* Newsletter
+* Social
+* Other
 
 ---
 
-# 🏗 Tech Stack
+### 🔍 Semantic Email Search
 
-## Frontend
+Search emails using natural language instead of exact keywords.
 
-* React.js
-* Axios
+Examples:
+
+```text
+internship opportunities
+machine learning emails
+interview related emails
+amazon assessments
+```
+
+Powered by:
+
+* Gemini Embeddings
+* MongoDB Atlas Vector Search
+
+---
+
+### 🔗 Similar Emails
+
+Discover semantically related emails.
+
+Examples:
+
+* Similar internship opportunities
+* Related recruiter conversations
+* Similar project discussions
+
+---
+
+### 🧠 AI Copilot (RAG)
+
+Ask questions about your inbox.
+
+Examples:
+
+```text
+What internship opportunities did I receive?
+
+Which emails require action?
+
+What deadlines are approaching?
+
+Summarize important emails this week.
+```
+
+Features:
+
+* Retrieval Augmented Generation (RAG)
+* Semantic Retrieval
+* Context-Aware Responses
+* Conversation History
+* Source Attribution
+
+---
+
+### 📩 Single Email AI Assistant
+
+Ask questions about a specific email.
+
+Examples:
+
+```text
+Summarize this email
+
+What action is required?
+
+What deadlines are mentioned?
+
+Draft a reply
+```
+
+---
+
+### 📰 Daily Digest
+
+Automatically generated AI digest containing:
+
+* Important Emails
+* Upcoming Deadlines
+* Action Items
+* High Priority Messages
+
+---
+
+### 🔔 Smart Notifications
+
+Receive notifications for:
+
+* High Priority Emails
+* New Tasks
+* Upcoming Deadlines
+* Important Updates
+
+---
+
+### 📊 Analytics Dashboard
+
+Inbox intelligence and productivity analytics.
+
+Includes:
+
+* Email Categories Distribution
+* Email Activity Trends
+* Top Senders
+* Priority Distribution
+* Upcoming Deadlines
+* Task Dashboard
+* Productivity Insights
+
+---
+
+## 🏗️ System Architecture
+
+```text
+User
+ ↓
+Google OAuth
+ ↓
+Gmail API
+ ↓
+Email Sync Service
+ ↓
+BullMQ Queue
+ ↓
+AI Processing Pipeline
+ ↓
+MongoDB Atlas
+ ↓
+Frontend Dashboard
+```
+
+### AI Processing Pipeline
+
+```text
+Email
+ ↓
+Summarization
+ ↓
+Priority Classification
+ ↓
+Task Extraction
+ ↓
+Deadline Detection
+ ↓
+Embedding Generation
+ ↓
+Storage
+```
+
+### Copilot Pipeline
+
+```text
+User Question
+ ↓
+Embedding Generation
+ ↓
+Vector Search
+ ↓
+Relevant Email Retrieval
+ ↓
+LLM Reasoning
+ ↓
+Answer Generation
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React
 * React Router
-* Recharts
+* Axios
 
-## Backend
+### Backend
 
 * Node.js
 * Express.js
+
+### Database
+
 * MongoDB Atlas
-* Mongoose
+* Atlas Vector Search
 
-## Authentication
+### Authentication
 
-* Google OAuth 2.0
 * Passport.js
+* Google OAuth 2.0
 
-## AI Layer
+### AI & LLM
 
-* OpenAI / Gemini APIs
-* Prompt-engineered structured outputs
-* Email summarization
-* Task extraction
-* Priority classification
+* Google Gemini
+* Groq
 
-## Vector Search
+### Background Processing
 
-* Embeddings generation
-* MongoDB Atlas Vector Index
-* Semantic similarity retrieval
+* BullMQ
+* Redis
 
-## Scheduling
+### APIs
 
-* node-cron background jobs
-* automated email processing pipeline
-* daily digest generation
+* Gmail API
 
 ---
 
-# 🧠 System Architecture
+## 📂 Project Structure
 
-```
-React Dashboard
-        ↓
-Express Backend API
-        ↓
-Google OAuth Authentication
-        ↓
-Gmail API Email Fetching
-        ↓
-Email Cleaning Pipeline
-        ↓
-LLM Processing Layer
-        ↓
-Embeddings Generator
-        ↓
-MongoDB Storage + Vector Index
-        ↓
-Semantic Search + Analytics Dashboard
-```
-
----
-
-# 📂 Project Structure
-
-```
-InboxIQ
+```text
+OctoMail
 │
 ├── frontend
 │   ├── components
 │   ├── pages
 │   ├── hooks
-│   └── services
+│   ├── services
+│   ├── context
+│   └── mock
 │
 ├── backend
-│   ├── routes
 │   ├── controllers
+│   ├── routes
 │   ├── services
 │   ├── middleware
 │   ├── models
-│   └── utils
+│   ├── queues
+│   └── workers
 │
 └── README.md
 ```
 
 ---
 
-# ⚙️ Installation
+## 🗄️ Database Models
 
-## Clone repository
+### Email
 
-```
-git clone https://github.com/yourusername/inboxiq.git
-cd inboxiq
-```
+Stores:
+
+* Gmail Metadata
+* Summary
+* Priority
+* Category
+* Tasks
+* Deadlines
+* Embeddings
+
+### Digest
+
+Stores AI-generated daily digests.
+
+### Notification
+
+Stores intelligent user notifications.
+
+### ChatMessage
+
+Stores Copilot conversation history.
 
 ---
 
-## Backend setup
+## 🚀 Installation
 
+### Clone Repository
+
+```bash
+git clone https://github.com/Harikaran14/OctoMail.git
+cd OctoMail
 ```
+
+### Backend Setup
+
+```bash
 cd backend
+
 npm install
-npm start
+
+npm run dev
 ```
 
----
+### Frontend Setup
 
-## Frontend setup
-
-```
+```bash
 cd frontend
+
 npm install
-npm start
+
+npm run dev
 ```
 
 ---
 
-# 🔑 Environment Variables
+## 🔐 Environment Variables
 
-Create `.env` file inside backend folder:
+Create a `.env` file inside the backend directory.
 
-```
-PORT=5000
+```env
+MONGO_URI=
 
-MONGO_URI=your_mongodb_connection_string
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+SESSION_SECRET=
 
-OPENAI_API_KEY=your_api_key
-```
+GEMINI_API_KEY=
+GROQ_API_KEY=
 
----
-
-# 📡 API Endpoints
-
-## Authentication
-
-```
-GET /auth/google
-GET /auth/google/callback
-```
-
-## Emails
-
-```
-GET /emails/fetch
-GET /emails/summaries
-GET /emails/tasks
-```
-
-## AI Features
-
-```
-POST /emails/summarize
-POST /emails/reply
-POST /emails/search
-```
-
-## Analytics
-
-```
-GET /analytics/dashboard
+REDIS_URL=
 ```
 
 ---
 
-# 🔎 Semantic Search Example
+## 📸 Screenshots
 
-Example query:
+### Dashboard
 
-```
-Find emails about assignment deadlines
-```
+*Add screenshot here*
 
-Workflow:
+### Semantic Search
 
-```
-Query → Embedding → Vector Similarity Search → Matching Emails
-```
+*Add screenshot here*
 
----
+### AI Copilot
 
-# 🧪 Example AI Output Format
+*Add screenshot here*
 
-```
-{
-  summary: "Meeting moved to tomorrow at 4 PM",
-  priority: "High",
-  tasks: ["Attend meeting"],
-  deadlines: ["Tomorrow 4 PM"]
-}
-```
+### Analytics
+
+*Add screenshot here*
 
 ---
 
-# 📈 Future Enhancements
+## 🌟 Key Highlights
 
-* Thread-level summarization
-* Calendar integration
-* Slack / WhatsApp notifications
-* Mobile responsive dashboard
-* Multi-account inbox support
-* RAG-based conversational inbox assistant
+✅ Gmail OAuth Integration
 
----
+✅ Incremental Gmail Sync
 
-# 🎯 Learning Outcomes
+✅ BullMQ Background Workers
 
-This project demonstrates:
+✅ AI Email Processing
 
-* Full-stack MERN architecture
-* Gmail API integration
-* OAuth authentication workflows
-* Prompt engineering with structured outputs
-* Vector embeddings & semantic retrieval
-* MongoDB aggregation pipelines
-* Background scheduling systems
-* Applied LLM system design
+✅ Semantic Search
+
+✅ Similar Email Discovery
+
+✅ AI Copilot (RAG)
+
+✅ Daily Digest
+
+✅ Smart Notifications
+
+✅ Analytics Dashboard
 
 ---
 
-# 👨‍💻 Author
+## 🔮 Future Improvements
+
+* Smart Reply Generation
+* Calendar Integration
+* Meeting Extraction
+* Workflow Automation Agents
+* Multi-Mail Provider Support
+* Personalized Productivity Recommendations
+
+---
+
+## 👨‍💻 Author
 
 **Harikaran C**
 
-Built as a flagship applied AI full-stack project showcasing modern LLM-powered productivity automation systems.
+B.Tech Information Technology
+
+SSN College of Engineering
+
+GitHub: https://github.com/Harikaran14
+
